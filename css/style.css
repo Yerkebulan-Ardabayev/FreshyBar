@@ -1,0 +1,255 @@
+/* mulish-regular - cyrillic_latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 400;
+  src: url('../fonts/mulish-v12-cyrillic_latin-regular.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* mulish-600 - cyrillic_latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 600;
+  src: url('../fonts/mulish-v12-cyrillic_latin-600.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+/* mulish-900 - cyrillic_latin */
+@font-face {
+  font-display: swap; /* Check https://developer.mozilla.org/en-US/docs/Web/CSS/@font-face/font-display for other options. */
+  font-family: 'Mulish';
+  font-style: normal;
+  font-weight: 900;
+  src: url('../fonts/mulish-v12-cyrillic_latin-900.woff2') format('woff2'); /* Chrome 36+, Opera 23+, Firefox 39+, Safari 12+, iOS 10+ */
+}
+
+html {
+  box-sizing: border-box;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: inherit;
+}
+
+body {
+  min-width: 320px;
+  min-height: 100vh;
+  font-family: Mulish, sans-serif;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 1.1;
+  background: #f8e8e2 url(../img/bg.svg) no-repeat top/contain;
+  color: #000;
+}
+
+button {
+  padding: 0;
+  cursor: pointer;
+  background-color: transparent;
+  border: 0;
+}
+
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+h1,
+h2,
+h3,
+p,
+fieldset {
+  margin: 0;
+}
+
+.container {
+  --width: 1180px;
+  --padding: 30px;
+  max-width: calc(var(--width) + (var(--padding) * 2));
+  padding: 0 var(--padding);
+  margin: 0 auto;
+}
+
+.btn {
+  color: #fff;
+  padding: 12px 28px;
+  border-radius: 40px;
+  background-color: #f44;
+  box-shadow: 0px 4px 20px 0px #fa5a5a;
+}
+.text-red {
+  color: #f44;
+}
+
+/*header*/
+
+.header {
+  padding: 32px 0;
+}
+
+.header__container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.header__btns {
+  display: flex;
+  align-items: center;
+  gap: 32px;
+}
+
+.header__btn {
+  display: inline-block;
+}
+
+/*hero section*/
+
+.hero {
+  padding: 30px 0 85px;
+}
+
+.hero__title {
+  font-size: 84px;
+  font-weight: 900;
+  max-width: 880px;
+}
+
+.hero__cup {
+  position: relative;
+  width: 380px;
+  height: 382px;
+  border-radius: 24px;
+}
+
+.hero__cups {
+  display: flex;
+  gap: 20px;
+  padding-top: 270px;
+}
+
+.hero__cup_ping {
+  background-color: #ff196c;
+}
+.hero__cup_orange {
+  background: #ffb72a;
+  margin-top: -70px;
+}
+.hero__img {
+  position: absolute;
+  bottom: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.hero__cup_green {
+  background-color: #34b905;
+}
+
+/*goods*/
+
+.goods {
+  padding: 60px 0 70px;
+}
+.goods__title {
+  font-size: 44px;
+  font-weight: 900;
+  margin-bottom: 40px;
+}
+.goods__list {
+  display: grid;
+  grid-template-columns: repeat(4, 280px);
+  gap: 20px;
+}
+
+/*cocktail*/
+
+.cocktail{
+  display: flex;
+  flex-direction: column;
+border-radius: 32px;
+background-color: #fff;
+padding: 12px;
+height: 100%;
+}
+.img__cocktail{
+border-radius: 24px;
+width: 100%;
+}
+.cocktail__content{
+flex-grow: 1;
+ display: flex;
+  flex-direction: column;
+  padding: 12px;
+
+}
+.cocktail__text{
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  margin-bottom: 2px;
+
+}
+.cocktail__title{
+  font-weight: 400;
+  margin-right: 8px;
+  font-size: 18px;
+}
+.cocktail__price{
+  font-weight: 600;
+}
+.cocktail__size{
+font-weight: 600;
+  font-size: 12px;
+  color: #c1c1c1;
+  align-self: flex-end;
+  margin-bottom: 10px;
+}
+.cocktail__btn{
+margin-top: auto;
+}
+
+/*footer*/
+
+.footer {
+  padding: 30px 0 32px;
+}
+
+.footer__container {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-areas:
+    'logo .'
+    'copyright developer';
+  gap: 40px;
+}
+
+.footer___logo {
+  grid-area: logo;
+}
+
+.footer___developer {
+  grid-area: developer;
+  justify-self: end;
+}
+
+.footer__copyright {
+  grid-area: copyright;
+}
+
+.footer__developer-item {
+  margin-bottom: 10px;
+}
+
+.footer__developer-item:last-child {
+  margin-bottom: 0;
+}
+
+.footer___developer-link {
+}
