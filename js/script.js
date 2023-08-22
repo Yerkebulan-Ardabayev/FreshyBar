@@ -20,7 +20,6 @@ const createCard = (item) => {
       <p class="cocktail__price text-red">${item?.price} ₸</p>
       <p class="cocktail__size">${item?.size}</p>
       </div>
-
       <button class="btn cocktail__btn data-id="${item?.id}">Добавить</button>
       </div>`;
   return cocktail;
@@ -30,7 +29,7 @@ const scrollService = {
   scrollPosition: 0,
   disabledScroll() {
     this.scrollPosition = window.scrollY;
-    document.documentElement.style.scrollBehavior = "none";
+    document.documentElement.style.scrollBehavior = "auto";
     document.body.style.cssText = `
     overflow: hidden;
     position: fixed;
@@ -64,9 +63,9 @@ const modalController = ({ modal, btnOpen, time = 300 }) => {
     const code = event.code;
     if (target === modalElem || code === 'Escape') {
       modalElem.style.opacity = 0;
-      scrollService.enabledScroll();
       setTimeout(() => {
         modalElem.style.visibility = 'hidden';
+        scrollService.enabledScroll();
       }, time);
       window.removeEventListener('keydown', closeModal)
     }
@@ -90,6 +89,12 @@ const init = async () => {
     modal: '.modal_order',
     btnOpen: '.header__btn-order',
   });
+
+  modalController({
+    modal: '.modal_make',
+    btnOpen: '.cocktail__btn_make',
+  });
+
   const goodsListElem = document.querySelector('.goods__list');
   const data = await getData();
 
