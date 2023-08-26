@@ -1,5 +1,17 @@
 const API_URL = 'https://tabby-jolly-run.glitch.me/';
 
+const price = {
+  Клубника: 600,
+  Банан: 500,
+  Киви: 550,
+  Манго: 900,
+  Маракуйя: 800,
+  Яблоко: 200,
+  Лед: 200,
+  Биоразлагаемый: 200,
+  Пластиковый: 100,
+};
+
 const getData = async () => {
   const response = await fetch(`${API_URL}api/goods`);
   const data = await response?.json();
@@ -20,7 +32,7 @@ const createCard = (item) => {
       <p class="cocktail__price text-red">${item?.price} ₸</p>
       <p class="cocktail__size">${item?.size}</p>
       </div>
-      <button class="btn cocktail__btn data-id="${item?.id}">Добавить</button>
+      <button class="btn cocktail__btn cocktail__btn_add" data-id="${item?.id}">Добавить</button>
       </div>`;
   return cocktail;
 };
@@ -29,7 +41,7 @@ const scrollService = {
   scrollPosition: 0,
   disabledScroll() {
     this.scrollPosition = window.scrollY;
-    document.documentElement.style.scrollBehavior = "auto";
+    document.documentElement.style.scrollBehavior = 'auto';
     document.body.style.cssText = `
     overflow: hidden;
     position: fixed;
@@ -43,12 +55,12 @@ const scrollService = {
   enabledScroll() {
     document.body.style.cssText = '';
     window.scroll({ top: this.scrollPosition });
-    document.documentElement.style.scrollBehavior = "";
+    document.documentElement.style.scrollBehavior = '';
   },
-}
+};
 
 const modalController = ({ modal, btnOpen, time = 300 }) => {
-  const buttonElem = document.querySelector(btnOpen);
+  const buttonElems = document.querySelectorAll(btnOpen);
   const modalElem = document.querySelector(modal);
 
   modalElem.style.cssText = `
@@ -67,7 +79,7 @@ const modalController = ({ modal, btnOpen, time = 300 }) => {
         modalElem.style.visibility = 'hidden';
         scrollService.enabledScroll();
       }, time);
-      window.removeEventListener('keydown', closeModal)
+      window.removeEventListener('keydown', closeModal);
     }
   };
 
@@ -78,10 +90,68 @@ const modalController = ({ modal, btnOpen, time = 300 }) => {
     scrollService: disabledScroll();
   };
 
+  buttonElems.forEach((buttonElem) => {
+    buttonElem.addEventListener('click', openModal);
+  });
 
-  buttonElem.addEventListener('click', openModal);
   modalElem.addEventListener('click', closeModal);
   return { openModal, closeModal };
+};
+
+const getFormData = (form) => {
+  const formData = new FormData(form);
+  const data = {};
+
+  for (const [name, value] of formData.entries()) {
+    if (data[name]) {
+      if (!Array.isArray(data[name])) {
+        data[name] = [data[name]];
+      }
+      data[name].push(value);
+    } else {
+      data[name] = value;
+    }
+  }
+  return data;
+};
+
+const calculateTotalPrice = (form, startPrice) => {
+  let totalPrice = startPrice;
+  const data = getFormData(form);
+
+  if (Array.isArray(data.ingredients)) {
+    data.ingredients.forEach((item) => {
+      totalPrice += price[item] || 0;
+    });
+  } else {
+    totalPrice += price[data.ingredients] || 0;
+  }
+
+  if (Array.isArray(data.topping)) {
+    data.ingredients.forEach((item) => {
+      totalPrice += price[item] || 0;
+    });
+  } else {
+    totalPrice += price[data.topping] || 0;
+  }
+
+  totalPrice += price[data.cap] || 0;
+  return totalPrice;
+};
+
+const calculateMakeYourOwn = () => {
+  const formMakeOwn = document.querySelector('.make__form_make-your-own');
+  const makeInputPrice = formMakeOwn.querySelector('.make__input_price');
+  const makeTotalPrice = formMakeOwn.querySelector('.make__total-price');
+
+  const handlerChange = () => {
+    const totalPrice = calculateTotalPrice(formMakeOwn, 150);
+    makeInputPrice.value = totalPrice;
+    makeTotalPrice.textContent = `${totalPrice} ₸`;
+  };
+
+  formMakeOwn.addEventListener('change', handlerChange);
+  handlerChange();
 };
 
 const init = async () => {
@@ -90,8 +160,10 @@ const init = async () => {
     btnOpen: '.header__btn-order',
   });
 
+  calculateMakeYourOwn();
+
   modalController({
-    modal: '.modal_make',
+    modal: '.modal_make-your-own',
     btnOpen: '.cocktail__btn_make',
   });
 
@@ -106,6 +178,11 @@ const init = async () => {
   });
 
   goodsListElem?.append(...cartsCocktail);
+
+  modalController({
+    modal: '.modal_add',
+    btnOpen: '.cocktail__btn_add',
+  });
 };
 
 init();
