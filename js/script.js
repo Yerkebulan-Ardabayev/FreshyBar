@@ -331,7 +331,7 @@ const renderCart = () => {
     0
   )} ₸`;
 
-  orderForm.addEventListener('submit', (e) => {
+  orderForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     if (!orderListData.length) {
       alert('Корзина пустая');
