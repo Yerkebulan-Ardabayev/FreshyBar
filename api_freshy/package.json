@@ -13,7 +13,7 @@
     "node",
     "app"
   ],
-  "author": "Maksim Leskin <maksim.leskin@methed.ru>",
+  "author": "",
   "license": "ISC",
   "devDependencies": {
     "eslint": "^8.45.0",
